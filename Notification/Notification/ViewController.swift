@@ -9,22 +9,17 @@
 import UIKit
 import UserNotifications
 
-class ViewController: UIViewController {
-
-    @IBOutlet weak var segment: UISegmentedControl!
+class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     
     @IBAction func setNotification(_ sender: Any) {
-        
-//        let seconds = Int(segment.titleForSegment(at: segment.selectedSegmentIndex)!)!
-        
-        // 通知の表示内容
+        // タイトル、本文、サウンド設定の保持
         let content = UNMutableNotificationContent()
         content.title = "時間です"
         content.subtitle   = "5秒経過しました"
         content.body = "タップしてアプリを開いてください"
         content.sound = UNNotificationSound.default()
         
-        // seconds後に起動するトリガー
+        // seconds後に起動するトリガーを保持
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         
         // 識別子とともに通知の表示内容とトリガーを内包する
@@ -32,14 +27,13 @@ class ViewController: UIViewController {
         
         // UNUserNotificationCenterにrequestを加える
         let center = UNUserNotificationCenter.current()
+        center.delegate = self
         center.add(request) { (error) in
             if let error = error {
                 print(error.localizedDescription)
             }
         }
     }
-    
-    // ToDo:フォアグラウンドの場合には通知は表示
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +43,11 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // フォアグラウンドの場合にも通知を表示
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
     }
 }
 
