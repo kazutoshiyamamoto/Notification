@@ -15,20 +15,20 @@ class ViewController: UIViewController {
     
     @IBAction func setNotification(_ sender: Any) {
         
-        let seconds = Int(segment.titleForSegment(at: segment.selectedSegmentIndex)!)!
+//        let seconds = Int(segment.titleForSegment(at: segment.selectedSegmentIndex)!)!
         
         // 通知の表示内容
         let content = UNMutableNotificationContent()
-        content.title = "It's Time."
-        content.subtitle   = "\(seconds) seconds elapsed!"
-        content.body = "I told you new because you had set \(seconds) seconds before."
+        content.title = "時間です"
+        content.subtitle   = "5秒経過しました"
+        content.body = "タップしてアプリを開いてください"
         content.sound = UNNotificationSound.default()
         
         // seconds後に起動するトリガー
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Double(seconds), repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         
         // 識別子とともに通知の表示内容とトリガーを内包する
-        let request = UNNotificationRequest(identifier: "TIMER\(seconds)", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: "TIMER", content: content, trigger: trigger)
         
         // UNUserNotificationCenterにrequestを加える
         let center = UNUserNotificationCenter.current()
