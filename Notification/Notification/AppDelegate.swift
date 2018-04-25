@@ -19,12 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // アプリのバッジの更新、サウンド、アラートの通知に関してユーザへ確認
+        // notification center (singleton)
+        // ToDo:シングルトンの実装？確認
+        // optionsに関しては"https://developer.apple.com/documentation/usernotifications/unauthorizationoptions"
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .badge, .sound]) {(granted, error) in
             if granted {
-                print("Allowed")
+                print("許可する")
             } else {
-                print("Didn`t allowed")
+                print("許可しない")
             }
         }
         return true
