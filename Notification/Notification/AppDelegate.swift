@@ -18,14 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        // notification center (singleton)
+        // アプリのバッジの更新、サウンド、アラートの通知に関してユーザへ確認
         let center = UNUserNotificationCenter.current()
-        
-        // requst to notify for user
-        center.requestAuthorization(options: [.alert, .badge, .sound]) {(granted, error) in if granted {
-            print("Allowed")
-        } else {
-            print("Didn`t allowed")
+        center.requestAuthorization(options: [.alert, .badge, .sound]) {(granted, error) in
+            if granted {
+                print("Allowed")
+            } else {
+                print("Didn`t allowed")
             }
         }
         return true
